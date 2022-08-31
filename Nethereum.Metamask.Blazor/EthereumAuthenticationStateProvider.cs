@@ -3,9 +3,20 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Authorization;
 using Nethereum.UI;
 using System.Security.Claims;
+using System.Linq;
 
 namespace Nethereum.Blazor
 {
+    public class EthAddresses
+    {
+        public sealed class Admin
+        {
+            public static string Owner => "0x44E768c7e21bA56C12B5c83f1868638fd55637D0";
+
+            public static string[] Admins => new[] { "0x44E768c7e21bA56C12B5c83f1868638fd55637D0", "0xE77F20946533C2C9C036644025b74F9B187112D4" };
+        }
+    }
+
     public class EthereumAuthenticationStateProvider : AuthenticationStateProvider, IDisposable
     {
         protected IEthereumHostProvider EthereumHostProvider { get; set; }
@@ -100,12 +111,20 @@ namespace Nethereum.Blazor
             ClaimsIdentity claimsIdentity;
             ClaimsPrincipal claimsPrincipal;
 
-            if (ethereumAddress == "0x44E768c7e21bA56C12B5c83f1868638fd55637D0")
+            if (ethereumAddress == EthAddresses.Admin.Owner)
             {
                 claimEthereumAddress = new Claim(ClaimTypes.NameIdentifier, ethereumAddress);
                 claimEthereumConnectedRole = new Claim(ClaimTypes.Role, "OwnerConnected");
 
                 claimsIdentity = new ClaimsIdentity(new[] { claimEthereumAddress, claimEthereumConnectedRole }, "ownerConnected");
+                claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+            }
+            else if(EthAddresses.Admin.Admins.Contains(ethereumAddress))
+            {
+                claimEthereumAddress = new Claim(ClaimTypes.NameIdentifier, ethereumAddress);
+                claimEthereumConnectedRole = new Claim(ClaimTypes.Role, "AdminConnected");
+
+                claimsIdentity = new ClaimsIdentity(new[] { claimEthereumAddress, claimEthereumConnectedRole }, "adminConnected");
                 claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
             }
             else
