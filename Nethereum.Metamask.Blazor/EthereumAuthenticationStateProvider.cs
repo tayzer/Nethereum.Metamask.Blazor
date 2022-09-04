@@ -11,9 +11,9 @@ namespace Nethereum.Blazor
     {
         public sealed class Admin
         {
-            public static string Owner => "0x2Df04451f8Dc049D23B7901a79a9f65856C5956D";
+            public static string Owner => "0x2Df04451f8Dc049D23B7901a79a9f65856C5956D".ToLower();
 
-            public static string[] Admins => new[] { "0x44E768c7e21bA56C12B5c83f1868638fd55637D0", "0xE77F20946533C2C9C036644025b74F9B187112D4" };
+            public static string[] Admins => new[] { "0x44E768c7e21bA56C12B5c83f1868638fd55637D0".ToLower(), "0xE77F20946533C2C9C036644025b74F9B187112D4".ToLower() };
         }
     }
 
