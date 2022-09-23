@@ -13,7 +13,7 @@ namespace Nethereum.Blazor
         {
             public static string Owner => "0x2Df04451f8Dc049D23B7901a79a9f65856C5956D".ToLower();
 
-            public static string[] Admins => new[] { "0x44E768c7e21bA56C12B5c83f1868638fd55637D0".ToLower(), "0xE77F20946533C2C9C036644025b74F9B187112D4".ToLower(), "0x2Df04451f8Dc049D23B7901a79a9f65856C5956D".ToLower(), "0x5b81bC64A8b6e62c61bB8241B20848a4b43F79C0".ToLower() };
+            public static string[] Admins => new[] { "0x44E768c7e21bA56C12B5c83f1868638fd55637D0".ToLower(), "0xE77F20946533C2C9C036644025b74F9B187112D4".ToLower(), "0x2Df04451f8Dc049D23B7901a79a9f65856C5956D".ToLower(), "0x5b81bC64A8b6e62c61bB8241B20848a4b43F79C0".ToLower(), "0xd4988eFC1673fA43fFccC01E60e5c82CdD8A7F36".ToLower() };
         }
     }
 
