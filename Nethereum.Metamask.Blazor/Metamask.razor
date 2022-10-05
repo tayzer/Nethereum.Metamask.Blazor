@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNetCore.Components.Authorization
+﻿@using Jdenticon
+@using Microsoft.AspNetCore.Components.Authorization
 @using Nethereum.Blazor
 @using Nethereum.UI
 @implements IDisposable;
@@ -11,14 +12,16 @@
     {
         <AuthorizeView Roles="EthereumConnected, Owner">
             <Authorized>
-               <button type="button" class="btnMetamask btnMetamaskSelected">@Truncate(SelectedAccount, SelectedAccountTruncateLength)</button>
+                <button type="button" class="btnMetamask btnMetamaskSelected"> @((MarkupString)accountSVG) @Truncate(SelectedAccount, SelectedAccountTruncateLength)</button>
             </Authorized>
             <NotAuthorized>
                 <button type="button" class="btnMetamask" @onclick="@EnableEthereumAsync">@ConnectText</button>
             </NotAuthorized>
         </AuthorizeView>
-    }else{
-          <button class="btnMetamask" disabled>@InstallMetamaskText</button>
+    }
+    else
+    {
+        <button class="btnMetamask" disabled>@InstallMetamaskText</button>
     }
 </div>
 
@@ -26,6 +29,8 @@
 
     bool MetamaskAvailable { get; set; }
     string SelectedAccount { get; set; }
+
+    string accountSVG;
 
     [Parameter]
     public string ConnectText { get; set; } = "Connect Metamask";
@@ -50,7 +55,6 @@
                 {
                     await _selectedHostProvider.SetSelectedEthereumHostProvider(_metamaskHostProvider);
                 }
-
             }
             StateHasChanged();
         }
@@ -64,12 +68,18 @@
     private async Task MetamaskHostProvider_SelectedAccountChanged(string account)
     {
         SelectedAccount = account;
+
+        //Identicon
+        //    .FromValue(account, size: 160)
+        //    .SaveAsPng($"identities/{account}.png");
+
+        accountSVG = Identicon.FromValue(account, 32).ToSvg();
+
         this.StateHasChanged();
     }
 
     protected async Task EnableEthereumAsync()
     {
-       
         SelectedAccount = await _metamaskHostProvider.EnableProviderAsync();
         await _selectedHostProvider.SetSelectedEthereumHostProvider(_metamaskHostProvider);
 
@@ -79,7 +89,6 @@
         }
 
         StateHasChanged();
-        
     }
 
     public static string Truncate(string? value, int maxLength, string truncationSuffix = "…")
@@ -88,6 +97,6 @@
             ? value.Substring(0, maxLength) + truncationSuffix
             : value;
     }
-   
+
 }
 
