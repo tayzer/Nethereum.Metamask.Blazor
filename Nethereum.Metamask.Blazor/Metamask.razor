@@ -1,4 +1,5 @@
-﻿@using Jdenticon
+﻿@using Blazorise;
+@using Jdenticon
 @using Microsoft.AspNetCore.Components.Authorization
 @using Nethereum.Blazor
 @using Nethereum.UI
@@ -10,18 +11,25 @@
 <div>
     @if (MetamaskAvailable)
     {
-        <AuthorizeView Roles="EthereumConnected, Owner">
+        <AuthorizeView Roles="EthereumConnected, Owner, Admin">
             <Authorized>
-                <button type="button" class="btnMetamask btnMetamaskSelected"> @((MarkupString)accountSVG) @Truncate(SelectedAccount, SelectedAccountTruncateLength)</button>
+                <Button Class="btnMetamask btnMetamaskSelected"> @((MarkupString)accountSVG) @Truncate(SelectedAccount, SelectedAccountTruncateLength)</Button>
             </Authorized>
             <NotAuthorized>
-                <button type="button" class="btnMetamask" @onclick="@EnableEthereumAsync">@ConnectText</button>
+                @if(string.IsNullOrEmpty(SelectedAccount))
+                {
+                    <Button Class="btnMetamask" @onclick="@EnableEthereumAsync">@ConnectText</Button>
+                }
+                else
+                {
+                    <Button Class="btnMetamask btnMetamaskSelected"> @((MarkupString)accountSVG) @Truncate(SelectedAccount, SelectedAccountTruncateLength)</Button>
+                }
             </NotAuthorized>
         </AuthorizeView>
     }
     else
     {
-        <button class="btnMetamask" disabled>@InstallMetamaskText</button>
+        <Button Class="btnMetamask" disabled>@InstallMetamaskText</Button>
     }
 </div>
 

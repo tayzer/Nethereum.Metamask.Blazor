@@ -1,4 +1,5 @@
 .btnMetamask {
+    content: url("/_content/Nethereum.Metamask.Blazor/img/metamask-fox.svg");
     border: none;
     padding: 8px 8px;
     font-size: 0.9rem;
@@ -11,7 +12,7 @@
 
 
 .btnMetamask:before {
-    content: url("/_content/Nethereum.Metamask.Blazor/img/metamask-fox.svg"); 
+ /*   content: url("/_content/Nethereum.Metamask.Blazor/img/metamask-fox.svg"); */
     width: 30px;
     float: left;
     margin-right: 5px;
